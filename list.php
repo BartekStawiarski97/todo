@@ -3,7 +3,7 @@
 <?php
     $id = $_GET["id"];
     require 'functions.php';
-    $task = taskById($id);  
+    $listn = listById($id);  
 ?>
 
 <html lang="en">
@@ -22,8 +22,7 @@
             <div>
                 <div class="text-center mb-4">
                     <div>
-                        <h4>Name: <?php echo $task['taskname'] ?></h4>
-                        <h4>Description: <?php echo $task['description'] ?></h4>
+                        <h4>Name: <?php echo $listn['name'] ?></h4>
                     </div>                   
                 </div>
             </div>
@@ -31,8 +30,8 @@
     </div>
    
    <div class="text-center">
-       <a class="btn-lg btn-dark text-white" href="updateTask.php?id=<?= $task["id"]?>">Update task</a>
-       <a class="btn-lg btn-danger text-white" href="deleteTask.php?id=<?= $task["id"]?>">Delete task</a>
+       <a class="btn-lg btn-dark text-white" href="updateList.php?id=<?= $listn["id"]?>">Update list</a>
+       <a class="btn-lg btn-danger text-white" href="deleteList.php?id=<?= $listn["id"]?>">Delete list</a>
        <a class="btn-lg btn-danger text-white" href="index.php">Cancel</a>
     </div>
    <hr>

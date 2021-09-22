@@ -4,8 +4,8 @@
   require 'header.html';
   require 'footer.html';
   require 'functions.php';
-  $listn = listById($id); 
-  updateList();
+  $task = taskById($id); 
+  updateTask();
 
  ?>
 
@@ -20,13 +20,16 @@
 </head>
 <body>
 
-  <form name="update" method="post" action="updateList.php">
+  <form name="update" method="post" action="updateTask.php">
             <div class="form-group d-flex justify-content-center mt-5">
-                <input type="hidden" name="id" value="<?php echo $listn['id'] ?>"/>
-                <label for="">Change list name here:</label>
+                <input type="hidden" name="id" value="<?php echo $task['id'] ?>"/>
+                <label for="">Change task name and description here:</label>
              </div>
+            <div class="text-center mb-3">
+                <input class="form-control w-25 mx-auto" type="text" name="taskname" placeholder="Task name" value="<?php echo $task['taskname'] ?>" required>
+              </div>
             <div class=text-center>
-                <input class="form-control w-25 mx-auto" type="text" name="name" placeholder="List name" value="<?php echo $listn['name'] ?>" required>
+                <input class="form-control w-25 mx-auto" type="text" name="description" placeholder="description" value="<?php echo $task['description'] ?>" required>
               </div>
 
            <div class="text-center">

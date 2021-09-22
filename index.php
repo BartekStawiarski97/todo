@@ -3,6 +3,7 @@
 <?php
     include('functions.php');
     $lists = listn();
+    $tasks = task();
 ?>
 
 <html lang="en">
@@ -26,20 +27,40 @@
   <h1>Your lists:</h1>
 </div>
 
-
-         <?php foreach ($lists as $listn) { ?>       
-           <div class="card text-center">            
+       <div class="col-12">
+        <div class="row d-flex justify-content-around">    
+         <?php foreach ($lists as $listn) { ?> 
+           <div class="card text-center mb-3">            
             <div class="card-body">
-                <h4 class="card-title"><?php echo $listn['name'] ?></h4>
-                <p class="card-text"><?php echo $listn['description'] ?></p>
+                <h4 class="card-title">List:</h4>
+                <p class="card-text"><?php echo $listn['name'] ?></p>
                 <p class="card-text"><?php echo $listn['date_time'] ?></p>
-                <a href="task.php?id=<?php echo $listn['id'] ?> "class="btn btn-dark">Edit List</a>
+                <a href="createTask.php?id=<?php echo $listn['id'] ?> "class="btn btn-dark">Add Task</a>
+                <a href="list.php?id=<?php echo $listn['id'] ?> "class="btn btn-danger">Edit List</a>
             </div>
-        </div>
+          </div>
 
-<?php
-}
-?>
+<?php } ?>
+       </div>
+      </div>
+
+      <div class="col-12">
+        <div class="row d-flex justify-content-around">    
+         <?php foreach ($tasks as $task) { ?> 
+           <div class="card text-center mb-3">            
+            <div class="card-body">
+                <h5 class="card-title">Task:</h5>
+                <p class="card-title"><?php echo $task['taskname'] ?></p>
+                <p class="card-text"><?php echo $task['description'] ?></p>
+                <p class="card-text"><?php echo $task['date_time'] ?></p>
+                <a href="task.php?id=<?php echo $task['id'] ?> "class="btn btn-danger">Edit Task</a>
+            </div>
+          </div>
+
+<?php } ?>
+       </div>
+      </div>
+
 
 <?php include('footer.html') ?>
 
