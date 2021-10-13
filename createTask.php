@@ -9,6 +9,8 @@ require("functions.php");
     $data = [];
     $class["taskname"] = $data["taskname"] = "";
     $class["description"] = $data["description"] = "";
+    $class["status"] = $data["status"] = "";
+    $class["duration"] = $data["duration"] = "";
     $class["date_time"] = $data["date_time"] = "";
 
 
@@ -21,19 +23,27 @@ require("functions.php");
             $data["taskname"] = $_POST["taskname"];
         }
 
-         if(isset($_POST["description"]) && empty($_POST["description"])){
+        if(isset($_POST["description"]) && empty($_POST["description"])){
             $class ["description"] = "is-invalid";
             $valid = 0;
         }else{
             $data["description"] = $_POST["description"];
         }
 
-         if(isset($_POST["date_time"]) && empty($_POST["date_time"])){
-            $class ["date_time"] = "is-invalid";
+        if(isset($_POST["status"]) && empty($_POST["status"])){
+            $class ["status"] = "is-invalid";
             $valid = 0;
         }else{
-            $data["date_time"] = $_POST["date_time"];
+            $data["status"] = $_POST["status"];
         }
+
+        if(isset($_POST["duration"]) && empty($_POST["duration"])){
+            $class ["duration"] = "is-invalid";
+            $valid = 0;
+        }else{
+            $data["duration"] = $_POST["duration"];
+        }
+
 
         if($valid == 1){
              insertTask($_POST);
@@ -71,8 +81,19 @@ require("functions.php");
         <div class="form-group">
             <label for="">Description</label>
             <input type="text" name="description" class="form-control <?=$class ["description"]?>" value="<?=$data["description"]?>">
-        </div>
-
+         </div> 
+         <div class="form-group">
+            <label for="">Status</label>
+             <select type="text" name="status" class="form-control <?=$class ["status"]?>" value="<?=$data["status"]?>">
+               <option class="bg-danger text-center text-danger">Not started</option>
+               <option class="bg-warning text-center text-warning">In progress</option>
+               <option class="bg-success text-center text-success">Finished</option>
+             </select>
+            </div>
+         <div class="form-group">
+           <label for="">Duration</label>
+            <input type="time" id="appt" name="duration" class="form-control <?=$class ["duration"]?>" value="<?=$data["duration"]?>">
+           </div> 
         <button class="btn btn-primary">Create</button>
         <a class="btn btn-dark" href="index.php">Back</a>
 

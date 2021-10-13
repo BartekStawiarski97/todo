@@ -28,9 +28,19 @@
             <div class="text-center mb-3">
                 <input class="form-control w-25 mx-auto" type="text" name="taskname" placeholder="Task name" value="<?php echo $task['taskname'] ?>" required>
               </div>
-            <div class=text-center>
+            <div class="text-center mb-3">
                 <input class="form-control w-25 mx-auto" type="text" name="description" placeholder="description" value="<?php echo $task['description'] ?>" required>
               </div>
+            <div class="text-center mb-3">
+                <select type="text" name="status" class="form-control w-25 mx-auto <?=$class ["status"]?>" value="<?=$data["status"]?>">
+               <option class="bg-danger text-center text-danger">Not started</option>
+               <option class="bg-warning text-center text-warning">In progress</option>
+               <option class="bg-success text-center text-success">Finished</option>
+             </select>
+              </div>
+            <div class="text-center mb-3">
+             <input type="time" id="appt" name="duration" class="form-control <?=$class ["duration"]?>" value="<?=$data["duration"]?>">
+             </div> 
 
            <div class="text-center">
             <input type="submit" value="Update" class="mt-2 btn btn-dark">

@@ -1,5 +1,7 @@
 <?php 
 
+// Database connection
+
 function dbConnect(){
  $servername = "localhost";
  $username = "root";
@@ -63,31 +65,34 @@ function dbConnect(){
 
   function insertTask(){
    $conn = dbConnect();
-   $stmt = $conn->prepare("INSERT INTO tasks (list_id, taskname, description) VALUES(:list_id, :taskname, :description)");
+   $stmt = $conn->prepare("INSERT INTO tasks (list_id, taskname, description, status, duration) VALUES(:list_id, :taskname, :description, :status, :duration)");
    $stmt->bindParam(":list_id", $_POST['id']);
    $stmt->bindParam(":taskname", $_POST["taskname"]);
-   $stmt->bindParam(":description", $_POST["description"]);   
+   $stmt->bindParam(":description", $_POST["description"]);
+   $stmt->bindParam(":status", $_POST["status"]);
+   $stmt->bindParam(":duration", $_POST["duration"]);       
    $stmt->execute();
   }
 
-  function task(){
-   $conn = dbConnect();
-   $stmt = $conn->prepare("SELECT * FROM tasks");
+  function taskByListId($id){
+   $conn = dbconnect();
+   $stmt = $conn->prepare("SELECT * FROM tasks WHERE list_id = :list_id");
+   $stmt->bindParam(":list_id", $id);
    $stmt->execute();
    $task = $stmt->fetchAll();
    return $task;
   }
-
+  
   function taskById($id){
    $conn = dbconnect();
-   $stmt = $conn->prepare("SELECT * FROM tasks WHERE id =:id");
+   $stmt = $conn->prepare("SELECT * FROM tasks WHERE id = :id");
    $stmt->execute([":id"=>$id]);
    return $stmt->fetch();
   }
 
   function deleteTask($id){
    $conn = dbconnect();
-   $stmt = $conn->prepare("DELETE FROM tasks WHERE id =:id");
+   $stmt = $conn->prepare("DELETE FROM tasks WHERE id = :id");
    $stmt->bindParam(":id", $id);
    $stmt->execute();
   }
@@ -95,12 +100,13 @@ function dbConnect(){
   function updateTask(){
     $conn = dbconnect();
     $id = $_POST['id'];
-    $stmt = $conn->prepare("UPDATE tasks SET taskname = :taskname, description = :description WHERE id = :id");
+    $stmt = $conn->prepare("UPDATE tasks SET taskname = :taskname, description = :description, status = :status, duration = :duration WHERE id = :id");
     $stmt->bindParam(":taskname", $_POST['taskname']);
     $stmt->bindParam(":description", $_POST['description']);
+    $stmt->bindParam(":status", $_POST['status']);
+    $stmt->bindParam(":duration", $_POST['duration']);
     $stmt->bindParam(":id", $_POST['id']);
     $stmt->execute();
   }
-
 
 ?>
