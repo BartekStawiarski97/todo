@@ -2,7 +2,16 @@
 
 <?php
     include('functions.php');
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+     // The request is using the POST method
     $lists = listn();
+    //$list = getListWithSortedTasks();
+  }
+  else{
+      $lists = listn();
+    
+  }
+  echo $message ;
 ?>
 
 <html lang="en">
@@ -21,19 +30,19 @@
  <div class="text-center mt-5 mb-5">
   <a class="btn-lg btn-dark text-white" href="createList.php">Add new list +</a>
 </div>
-  <div class="dropdown text-right">
-  <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Filters
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Duration (ascending)</a>
-    <a class="dropdown-item" href="#">Duration (descending)</a>
-    <hr>
-    <a class="dropdown-item" href="#">Status (Finished)</a>
-    <a class="dropdown-item" href="#">Status (In-progress)</a>
-    <a class="dropdown-item" href="#">Status (Not started)</a>
-   </div>
-  </div>
+ <form method="post" action="index.php">
+    <div>
+      <label for="duration">Sort by Duration:</label>
+      <select name="sort">
+        <option value="ASC">Time up!</option>
+        <option value="DESC">Time down!</option>
+        <option value="notstarted">Not started</option>
+        <option value="inprogress">In progress</option>
+        <option value="finished">Finished</option>
+      </select>
+    </div>
+      <button type="submit" value="update">Sort</button>
+  </form>
 
 
 
@@ -51,11 +60,18 @@
                <a href="list.php?id=<?php echo $listn['id'] ?> "class="btn btn-danger">Edit List</a>
              </div>
               <hr>      
-            <?php foreach (taskByListId($listn['id']) as $task){ ?>
+            <!-- foreach (taskByListId($listn['id']) as $task){ ?> -->
+            <?php
+            $test = taskByListId($listn['id']);
+               if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                 $test = sortFilter($listn['id']);
+             }
+
+             foreach ($test as $task){ ?>
+
+
              <div class="task card">
-                  <p><?php echo $task['date_time'] ?></p> 
-                  <p class="card-title">Name: <?php echo $task['taskname'] ?></p>
-                  <p class="card-text">Description: <?php echo $task['description'] ?></p>
+                  <p class="card-text"><?php echo $task['description'] ?></p>
                   <p class="card-text">Status: <?php echo $task['status'] ?></p>
                   <p class="card-text">Duration: <?php echo $task['duration'] ?></p>
                   <div class="row mx-auto">          

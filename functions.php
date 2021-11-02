@@ -100,13 +100,40 @@ function dbConnect(){
   function updateTask(){
     $conn = dbconnect();
     $id = $_POST['id'];
-    $stmt = $conn->prepare("UPDATE tasks SET taskname = :taskname, description = :description, status = :status, duration = :duration WHERE id = :id");
-    $stmt->bindParam(":taskname", $_POST['taskname']);
+    $stmt = $conn->prepare("UPDATE tasks SET description = :description, status = :status, duration = :duration WHERE id = :id");
     $stmt->bindParam(":description", $_POST['description']);
     $stmt->bindParam(":status", $_POST['status']);
     $stmt->bindParam(":duration", $_POST['duration']);
     $stmt->bindParam(":id", $_POST['id']);
     $stmt->execute();
   }
+
+  function sortFilter($list_id){
+    $conn = dbconnect();
+        //duration ascending filter
+        if($_POST['sort'] == "ASC"){
+            $query = $conn->prepare("SELECT * FROM `todo` LEFT JOIN tasks ON `tasks`.`list_id` = `todo`.`id` WHERE `todo`.`id` = :list_id ORDER BY `tasks`.`duration` ASC");
+        }
+        //duration descending filter
+        else if($_POST['sort'] == "DESC"){
+            $query = $conn->prepare("SELECT * FROM `todo` LEFT JOIN tasks ON `tasks`.`list_id` = `todo`.`id` WHERE `todo`.`id` = :list_id ORDER BY `tasks`.`duration` DESC");
+        }
+        //only shows not started tasks
+        else if($_POST['sort'] == "notstarted"){
+            $query = $conn->prepare("SELECT * FROM `todo` LEFT JOIN tasks ON `tasks`.`list_id` = `todo`.`id` WHERE `todo`.`id` = :list_id AND `tasks`.`status` = 'Not started'");
+        }
+        //only shows tasks in progress
+        else if($_POST['sort'] == "inprogress"){
+            $query = $conn->prepare("SELECT * FROM `todo` LEFT JOIN tasks ON `tasks`.`list_id` = `todo`.`id` WHERE `todo`.`id` = :list_id AND `tasks`.`status` = 'In progress'");
+        }
+        //only shows the finished tasks
+        else{
+            $query = $conn->prepare("SELECT * FROM `todo` LEFT JOIN tasks ON `tasks`.`list_id` = `todo`.`id` WHERE `todo`.`id` = :list_id AND `tasks`.`status` = 'Finished' ");
+        }
+        $query->bindParam(':list_id', $list_id);
+        $query->execute();
+        $sortedList = $query->fetchAll();
+        return $sortedList;
+    }
 
 ?>

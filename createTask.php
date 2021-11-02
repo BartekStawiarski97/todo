@@ -92,7 +92,7 @@ require("functions.php");
             </div>
          <div class="form-group">
            <label for="">Duration</label>
-            <input type="time" id="appt" name="duration" class="form-control <?=$class ["duration"]?>" value="<?=$data["duration"]?>">
+            <input type="number" id="appt" name="duration" class="form-control <?=$class ["duration"]?>" value="<?=$data["duration"]?>">
            </div> 
         <button class="btn btn-primary">Create</button>
         <a class="btn btn-dark" href="index.php">Back</a>
